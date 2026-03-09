@@ -1,15 +1,21 @@
-# MyCycle - Period & Cycle Tracking App
+# MyCycle
 
-A React Native (Expo) mobile application for tracking menstrual cycles and related health data.
+A privacy-first menstrual cycle tracking app built with React Native and Expo. All data stays on your device. Nothing is sent to a server.
+
+## Why I Built This
+
+Cycle tracking apps typically sync data to the cloud. That design choice became a serious concern when legal environments around reproductive healthcare started shifting. Health data that lives on a server can be subpoenaed, sold, or exposed in a breach. Health data that only exists on your phone cannot.
+
+I built this app with a single non-negotiable design constraint: no network requests, no cloud storage, no external services. Your data stays where you put it.
 
 ## Features
 
-- **Cycle Tracking**: Track your menstrual cycle with customizable cycle length, luteal phase, and period duration
-- **Calendar View**: Visual calendar with color-coded phases (menstrual, follicular, ovulation, luteal)
-- **Daily Logging**: Record temperature, mood, symptoms, and notes for each day
-- **Cycle Analytics**: View history and statistics about your cycles
-- **Data Export**: Export your data as CSV for backup or further analysis
-- **Private & Secure**: All data is stored locally on your device
+- **Cycle tracking**: Log period start and end, configure your typical cycle length, luteal phase, and period duration
+- **Phase calendar**: Color-coded view of menstrual, follicular, ovulation, and luteal phases with predictions based on your history
+- **Daily logging**: Record temperature, mood, symptoms, and notes for any day
+- **Cycle history**: View past cycles and statistics over time
+- **Data export**: Export your data as CSV for backup or your own analysis
+- **Fully offline**: No internet connection required, ever
 
 ## Tech Stack
 
@@ -17,90 +23,60 @@ A React Native (Expo) mobile application for tracking menstrual cycles and relat
 - TypeScript
 - Context API for state management
 - AsyncStorage for local data persistence
-- React Native Paper for UI components
-- React Native Calendars for the calendar view
+- React Native Paper (UI components)
+- React Native Calendars
 
-## Getting Started
+## Local Setup
 
 ### Prerequisites
 
-- Node.js (v14 or higher)
-- npm or yarn
-- Expo CLI
-- iOS Simulator (for iOS) or Android Emulator (for Android)
+- Node.js v14+
+- Expo CLI (`npm install -g expo-cli`)
+- Expo Go app on your phone, or an iOS/Android simulator
 
-### Installation
+### Install and run
 
-1. Clone the repository:
-   ```
-   git clone https://github.com/yourusername/MyCycle.git
-   cd MyCycle
-   ```
-
-2. Install dependencies:
-   ```
-   npm install
-   # or
-   yarn install
-   ```
-
-3. Start the development server:
-   ```
-   npm start
-   # or
-   yarn start
-   ```
-
-4. Open the app:
-   - Press `i` to open in iOS simulator
-   - Press `a` to open in Android emulator
-   - Scan the QR code with the Expo Go app on your device
-
-## Structure
-
-- `app/` - Main application code
-  - `components/` - Reusable UI components
-  - `context/` - React Context for state management
-  - `hooks/` - Custom React hooks
-  - `navigation/` - Navigation setup
-  - `screens/` - App screens
-  - `types/` - TypeScript type definitions
-  - `utils/` - Utility functions including the CycleEngine
-
-## Customization
-
-### Colors
-
-The app uses a soft color palette that can be customized in the `App.tsx` file:
-
-- Primary: `#FF6B6B` (soft coral)
-- Menstrual phase: `#FFD3D3` (light red)
-- Follicular phase: `#D3E5FF` (light blue)
-- Ovulation phase: `#FFF4D3` (light yellow)
-- Luteal phase: `#EBD3FF` (light purple)
-
-## Testing
-
-Run the unit tests with:
-
+```bash
+git clone https://github.com/hadleychin/cycle-tracker.git
+cd cycle-tracker
+npm install
+npm start
 ```
+
+Then scan the QR code with Expo Go, or press `i` for iOS simulator / `a` for Android.
+
+### Run tests
+
+```bash
 npm test
-# or
-yarn test
 ```
 
-## Future Enhancements
+The `CycleEngine` has unit tests covering phase calculation and date prediction logic.
 
-- Firebase integration for cloud backup
-- Push notifications for cycle predictions
-- More detailed analytics and charts
-- Symptom pattern recognition
+## Project Structure
+
+```
+cycle-tracker/
+├── app/
+│   ├── context/          # CycleContext - central state management
+│   ├── navigation/       # Tab and stack navigation
+│   ├── screens/          # HomeScreen, HistoryScreen, SettingsScreen, OnboardingScreen
+│   ├── types/            # TypeScript types
+│   └── utils/
+│       ├── CycleEngine.ts            # Core phase calculation and prediction logic
+│       ├── storage.ts                # AsyncStorage wrapper
+│       └── __tests__/
+│           └── CycleEngine.test.ts   # Unit tests
+├── assets/
+└── App.tsx
+```
+
+## Privacy
+
+This app makes zero network requests. There is no backend, no analytics, no crash reporting, no third-party SDKs that phone home. The only storage is `AsyncStorage` on your device.
+
+If you want to verify this, you can review the source. There are no `fetch`, `axios`, or `XMLHttpRequest` calls outside of Expo's internal development tooling.
 
 ## License
 
-This project is licensed under the MIT License.
-
-## Acknowledgments
-
-- [React Native Paper](https://callstack.github.io/react-native-paper/)
-- [React Native Calendars](https://github.com/wix/react-native-calendars) 
+MIT
